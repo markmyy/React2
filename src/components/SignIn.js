@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,9 +11,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useState} from "react";
 import axios from "axios";
-
+import React, {useState} from "react";
+ 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,35 +26,35 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+ 
 // TODO remove, this demo shouldn't need to reset the theme.
-
+ 
 const defaultTheme = createTheme();
-
+ 
 export default function SignIn() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const response = await axios.post(process.env.REACT_APP_BASE_URL+'/login',
-            {
-                username, 
-                password
-            }
-        );
-
-        const result = response.data;
-        console.log(result);
-        alert(result['message']);
-
-        if(result['status'] === true){
-            localStorage.setItem('token', result['token']);
-            window.location.href = '/';
-        }
-    }
-
+ const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+ 
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+ 
+      const response = await axios.post(process.env.REACT_APP_BASE_URL+'/admin/login',
+          {
+              username,
+              password
+          }
+      );
+ 
+      const result = response.data;
+      console.log(result);
+      alert(result['message']);
+ 
+      if(result['status'] === true){
+          localStorage.setItem('token', result['token']);
+          window.location.href = '/signup';
+      }
+  }
+ 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -80,12 +79,12 @@ export default function SignIn() {
               required
               fullWidth
               id="username"
-              label="User Name"
+              label="username"
               name="username"
               autoComplete="username"
-              autoFocus
               value={username}
-              onChange={ (e) => setUsername(e.target.value) }
+                onChange={ (e) => setUsername(e.target.value) }
+              autoFocus
             />
             <TextField
               margin="normal"
@@ -95,9 +94,10 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
               value={password}
               onChange={ (e) => setPassword(e.target.value) }
+              autoComplete="current-password"
+ 
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

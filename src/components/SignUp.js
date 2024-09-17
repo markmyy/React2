@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,9 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useState} from "react";
 import axios from "axios";
-
+ 
+ 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,42 +27,54 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+ 
 // TODO remove, this demo shouldn't need to reset the theme.
-
+ 
+const token = localStorage.getItem('token');
 const defaultTheme = createTheme();
-
+ 
+const headers = {
+  'authorization': `Bearer ${token}`,
+  'Content-Type': 'application/json'
+};
+ 
 export default function SignUp() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-
+    const [gender, setGender] = useState("");
+    const [email, setEmail] = useState("");
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+ 
         try{
-            const response = await axios.post(process.env.REACT_APP_BASE_URL+'/register',
+            const response = await axios.post(process.env.REACT_APP_BASE_URL+'/employee',
                 {
                     username,
                     password,
                     firstName,
-                    lastName
+                    lastName,
+                    email,
+                    gender
                 }
+                ,{headers}
             )
             const result = response.data;
             console.log(result);
             alert(result['message']);
-
+ 
             if(result['status'] === true){
                 window.location.href = '/';
             }
-
+ 
         }catch(err){
             console.log(err)
         }
     }
-
+ 
+ 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -91,9 +103,9 @@ export default function SignUp() {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  autoFocus
                   value={firstName}
                   onChange={ (e) => setFirstName(e.target.value)}
+                  autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -113,8 +125,8 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="username"
-                  label="User Name"
-                  name="username"
+                  label="Username"
+                  name="Username"
                   autoComplete="username"
                   value={username}
                   onChange={ (e) => setUsername(e.target.value) }
@@ -131,6 +143,30 @@ export default function SignUp() {
                   autoComplete="new-password"
                   value={password}
                   onChange={ (e) => setPassword(e.target.value) }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="Email"
+                  autoComplete="Email"
+                  value={email}
+                  onChange={ (e) => setEmail(e.target.value) }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="gender"
+                  label="Gender Male 1 Female 0"
+                  name="Gender"
+                  autoComplete="Gender"
+                  value={gender}
+                  onChange={ (e) => setGender(e.target.value) }
                 />
               </Grid>
               <Grid item xs={12}>
