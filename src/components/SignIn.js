@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import React, {useState} from "react";
- 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -26,35 +26,35 @@ function Copyright(props) {
     </Typography>
   );
 }
- 
+
 // TODO remove, this demo shouldn't need to reset the theme.
- 
+
 const defaultTheme = createTheme();
- 
+
 export default function SignIn() {
  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
- 
+
   const handleSubmit = async (e) => {
       e.preventDefault();
- 
+
       const response = await axios.post(process.env.REACT_APP_BASE_URL+'/admin/login',
           {
               username,
               password
           }
       );
- 
+
       const result = response.data;
       console.log(result);
       alert(result['message']);
- 
+
       if(result['status'] === true){
           localStorage.setItem('token', result['token']);
           window.location.href = '/signup';
       }
   }
- 
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -79,12 +79,21 @@ export default function SignIn() {
               required
               fullWidth
               id="username"
-              label="username"
+              label="Username"
               name="username"
               autoComplete="username"
               value={username}
-                onChange={ (e) => setUsername(e.target.value) }
+              onChange={ (e) => setUsername(e.target.value) }
               autoFocus
+              sx={{
+                transition: 'transform 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                },
+                '&:focus-within': {
+                  transform: 'scale(1.05)',
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -97,7 +106,15 @@ export default function SignIn() {
               value={password}
               onChange={ (e) => setPassword(e.target.value) }
               autoComplete="current-password"
- 
+              sx={{
+                transition: 'transform 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                },
+                '&:focus-within': {
+                  transform: 'scale(1.05)',
+                },
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

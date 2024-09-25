@@ -14,7 +14,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
  
- 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,8 +26,6 @@ function Copyright(props) {
     </Typography>
   );
 }
- 
-// TODO remove, this demo shouldn't need to reset the theme.
  
 const token = localStorage.getItem('token');
 const defaultTheme = createTheme();
@@ -74,7 +71,6 @@ export default function SignUp() {
         }
     }
  
- 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -106,6 +102,15 @@ export default function SignUp() {
                   value={firstName}
                   onChange={ (e) => setFirstName(e.target.value)}
                   autoFocus
+                  sx={{
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                    },
+                    '&:focus-within': {
+                      transform: 'scale(1.05)',
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -118,6 +123,15 @@ export default function SignUp() {
                   autoComplete="family-name"
                   value={lastName}
                   onChange={ (e) => setLastName(e.target.value)}
+                  sx={{
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                    },
+                    '&:focus-within': {
+                      transform: 'scale(1.05)',
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -130,6 +144,15 @@ export default function SignUp() {
                   autoComplete="username"
                   value={username}
                   onChange={ (e) => setUsername(e.target.value) }
+                  sx={{
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                    },
+                    '&:focus-within': {
+                      transform: 'scale(1.05)',
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -143,6 +166,15 @@ export default function SignUp() {
                   autoComplete="new-password"
                   value={password}
                   onChange={ (e) => setPassword(e.target.value) }
+                  sx={{
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                    },
+                    '&:focus-within': {
+                      transform: 'scale(1.05)',
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -155,6 +187,15 @@ export default function SignUp() {
                   autoComplete="Email"
                   value={email}
                   onChange={ (e) => setEmail(e.target.value) }
+                  sx={{
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                    },
+                    '&:focus-within': {
+                      transform: 'scale(1.05)',
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -167,6 +208,15 @@ export default function SignUp() {
                   autoComplete="Gender"
                   value={gender}
                   onChange={ (e) => setGender(e.target.value) }
+                  sx={{
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                    },
+                    '&:focus-within': {
+                      transform: 'scale(1.05)',
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
