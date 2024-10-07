@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,15 +12,18 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {useState} from "react";
 import axios from "axios";
-import React, {useState} from "react";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import InputAdornment from '@mui/material/InputAdornment';
+import KeyIcon from '@mui/icons-material/Key';
 
-function Copyright(props) {
+function MyFunction(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      {'Copyrights © '}
+      <Link color="inherit" href="https://www.rmutto.ac.th/">
+        Shopdee.com
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -27,33 +31,32 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
+const url = process.env.REACT_APP_BASE_URL;
 const defaultTheme = createTheme();
 
-export default function SignIn() {
- const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+export default function Login() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
-      e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-      const response = await axios.post(process.env.REACT_APP_BASE_URL+'/admin/login',
-          {
-              username,
-              password
-          }
-      );
+        const response = await axios.post(url + '/admin/login',
+            {
+                username,
+                password
+            }
+        );
 
-      const result = response.data;
-      console.log(result);
-      alert(result['message']);
+        const result = response.data;
+        console.log(result);
+        alert(result['message']);
 
-      if(result['status'] === true){
-          localStorage.setItem('token', result['token']);
-          window.location.href = '/signup';
-      }
-  }
+        if(result['status'] === true){
+            localStorage.setItem('token', result['token']);
+            window.location.href = '/admin/customer';
+        }
+    }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -67,83 +70,82 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: 'primary.dark' }}>            
+            <LockOutlinedIcon/>            
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+          เข้าสู่ระบบ
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
+            <TextField              
               margin="normal"
               required
               fullWidth
               id="username"
-              label="User Name"
+              label="ชื่อผู้ใช้"
               name="username"
               autoComplete="username"
+              autoFocus              
               value={username}
               onChange={ (e) => setUsername(e.target.value) }
-              autoFocus
-              sx={{
-                transition: 'transform 0.3s ease-in-out',
-                '&:hover': {
-                  transform: 'scale(1.05)',
+              slotProps={{
+                input: {
+                  endAdornment: 
+                  <InputAdornment position="start">
+                    <AccountCircle/>                    
+                  </InputAdornment>,
                 },
-                '&:focus-within': {
-                  transform: 'scale(1.05)',
-                },
-              }}
+              }}  
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              id="password"
               name="password"
-              label="Password"
+              label="รหัสผ่าน"              
               type="password"
+              id="password"
+              autoComplete="current-password"
               value={password}
               onChange={ (e) => setPassword(e.target.value) }
-              autoComplete="current-password"
-              sx={{
-                transition: 'transform 0.3s ease-in-out',
-                '&:hover': {
-                  transform: 'scale(1.05)',
+              slotProps={{
+                input: {
+                  endAdornment: 
+                  <InputAdornment position="start">
+                    <KeyIcon/>                
+                  </InputAdornment>,
                 },
-                '&:focus-within': {
-                  transform: 'scale(1.05)',
-                },
-              }}
+              }} 
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="จำรหัสผ่าน"
             />
             <Button
-              type="submit"
               id="btnLogin"
+              name="btnLogin"
+              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              เข้าสู่ระบบ
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  ลืมรหัสผ่าน
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"สมัครสมาชิก"}
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <MyFunction sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
